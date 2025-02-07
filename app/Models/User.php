@@ -3,15 +3,25 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
+use Filament\Panel\Concerns\HasAvatars;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Jeffgreco13\FilamentBreezy\Traits\TwoFactorAuthenticatable;
 
-class User extends Authenticatable
+use Illuminate\Support\Facades\Storage;
+use Filament\Panel;
+
+class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, TwoFactorAuthenticatable;
+
+    //add spatie with Hasrole
 
     /**
      * The attributes that are mass assignable.
@@ -49,9 +59,26 @@ class User extends Authenticatable
         ];
     }
 
+    //     public function canAccessPanel(): bool
+    // {
+    //     return $this->hasRole('admin');
+    // }
+
+    //Avatar
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar_url;
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+       return true;
+    }
 
     //relationship method
     public function keranjang() :HasMany{
         return $this->hasMany(Keranjang::class);
     }
+
+
 }

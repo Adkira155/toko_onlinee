@@ -20,8 +20,9 @@ class KeranjangResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
     protected static ?string $navigationLabel = 'Data Keranjang';
     protected static ?string $label = 'Keranjang';
-    protected static ?string $navigationGroup = 'Data Produk';
-    protected static ?int $navigationSort = 3;
+    protected static ?string $navigationGroup = 'Management Data Produk';
+    protected static ?string $slug = 'Data Keranjang';
+    // protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -41,16 +42,18 @@ class KeranjangResource extends Resource
             ->columns([
                 //
             ])
+
+
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make(),
                 ]),
 
 
@@ -70,7 +73,7 @@ class KeranjangResource extends Resource
             'index' => Pages\ListKeranjangs::route('/'),
             'create' => Pages\CreateKeranjang::route('/create'),
             'view' => Pages\ViewKeranjang::route('/{record}'),
-            'edit' => Pages\EditKeranjang::route('/{record}/edit'),
+          //  'edit' => Pages\EditKeranjang::route('/{record}/edit'),
         ];
     }
 }

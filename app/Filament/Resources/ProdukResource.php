@@ -36,8 +36,10 @@ class ProdukResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-archive-box';
     protected static ?string $navigationLabel = 'Data Produk';
     protected static ?string $label = 'Produk';
-    protected static ?string $navigationGroup = 'Data Produk';
-    protected static ?int $navigationSort = 2;
+    protected static ?string $navigationGroup = 'Management Data Produk';
+    protected static ?string $slug = 'Data Produk';
+
+    // protected static ?int $navigationSort = ;
 
     public static function form(Form $form): Form
     {
@@ -171,12 +173,13 @@ class ProdukResource extends Resource
                 ->circular()
                 ->stacked()
                 ->limit(3),
-                TextColumn::make('nama_produk')->label('Nama Produk'),
+                TextColumn::make('nama_produk')->label('Nama Produk')->searchable(),
                 TextColumn::make('harga')->label('Harga Produk')->money('IDR'),
                 TextColumn::make('berat')->label('berat')->suffix('Gram'),
                 TextColumn::make('stock')->label('Stok')->suffix('pcs'),
 
             ])
+
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
 
