@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            
+        //    $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+        //    $table->foreignId('detailorder_id')->constrained('detailorders')->cascadeOnDelete();
+
+            // $table->string('nama_penerima')->nullable();
+            // $table->text('catatan')->nullable();
             $table->timestamps();
         });
     }

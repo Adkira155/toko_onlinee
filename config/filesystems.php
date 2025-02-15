@@ -43,6 +43,11 @@ return [
     //     'url' => env('APP_URL').'/uploads/product',
     // ],
 
+    // 'user' => [
+    //     'driver' => 'local',
+    //     'root' => public_path('uploads/user'),
+    //     'url' => env('APP_URL').'/uploads/user',
+    //     ],
 
         'public' => [
             'driver' => 'local',

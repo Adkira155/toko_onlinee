@@ -55,6 +55,7 @@ class ReviewResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Action::make('reply')
                 ->form([
                     TextInput::make('reply'),
@@ -63,7 +64,7 @@ class ReviewResource extends Resource
 
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
 

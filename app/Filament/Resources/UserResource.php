@@ -2,17 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\User;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Infolists\Components\Section;
+use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
+use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\Exports\UserExporter;
+use App\Filament\Imports\UserImporter;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ExportBulkAction;
+use Filament\Tables\Actions\ImportAction;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
@@ -26,7 +32,10 @@ class UserResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
+        ->schema([
+            Section::make(
+                'User Informasi'
+            )->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -43,6 +52,7 @@ class UserResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('role')
                     ->required(),
+                ]),
             ]);
     }
 
@@ -72,10 +82,22 @@ class UserResource extends Resource
             ])
             ->filters([
                 //
+                SelectFilter::make('name')
+                    ->multiple()
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+
+            ])
+
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(UserExporter::class),
+                ImportAction::make()
+                    ->importer(UserImporter::class)
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
